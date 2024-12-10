@@ -4,6 +4,7 @@
 ## Version: 2.0
 ## SavedVariables: XPTrackerDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets
+## IconTexture: Interface\AddOns\XPTracker\images\Logo
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
