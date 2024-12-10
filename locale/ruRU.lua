@@ -1,12 +1,13 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("XPTracker", "ruRU")
 if not L then return end
 
-L["XPTracker 2.0 - Lvl "] = "XPTracker - Уровень "
+L["XPTracker 2.0 - Level "] = "XPTracker - Уровень "
 L["Last Event XP: "] = "Последний Опыт: "
 L["Repeat to level: "] = "Повторите до уровня: "
 L["XP to Level: "] = "Опыта до уровня: "
 L["Currently Resting: "] = "В настоящее время отдыхает: "
 L["Rested XP: "] = "Опыт от Отдыха: "
+L["Rested XP: %.0f / %.0f"] = true
 
 L["XP Per Hour: "] = "Опыта в час: "
 L["Time Elapsed: "] = "Время истекло: "

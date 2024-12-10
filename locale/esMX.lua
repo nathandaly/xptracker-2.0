@@ -1,12 +1,13 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("XPTracker", "esMX")
 if not L then return end
 
-L["XPTracker 2.0 - Lvl "] = true
+L["XPTracker 2.0 - Level "] = true
 L["Last Event XP: "] = true
 L["Repeat to level: "] = true
 L["XP to Level: "] = true
 L["Currently Resting: "] = true
 L["Rested XP: "] = true
+L["Rested XP: %.0f / %.0f"] = true
 
 L["XP Per Hour: "] = true
 L["Time Elapsed: "] = true

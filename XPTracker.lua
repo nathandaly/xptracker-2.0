@@ -54,10 +54,15 @@ end
 function XPTracker:OnEnable()
   XPTracker:RegisterEvents()
   XPTracker:UpdateXPData()
-  --Widgets:CreateReloadButton() -- for quick reload testing only
+  -- Widgets:CreateReloadButton() -- for quick reload testing only
   Widgets:CreateMainWindow()
   ConfigMenu:RegisterConfigMenu()
   XPTracker:CleanupTracking()
+
+  local window = XPTracker.MainWindow
+  window:SetScript("OnUpdate", function(self, elapsed)
+    XPTracker:UpdateRestingInfo(elapsed)
+  end)
 end
 
 function XPTracker:OnDisable()
@@ -329,17 +334,42 @@ function XPTracker:CleanupTracking()
   Widgets:UpdateTrackingButtonText(XPTracker.TrackingButton.Text)
 end
 
-function XPTracker:UpdateRestingInfo()
+function XPTracker:UpdateRestingInfo(elapsed)
+  if elapsed == nil then return end
+  local restedXP = GetRestState() and GetXPExhaustion() or 0 -- Current rested XP
+  local maxXP = UnitXPMax("player") -- Max XP for the current level
+  local incrementPerSecond = (maxXP * 0.05) / (8 * 60 * 60) -- Rested XP gained per second
+  local accumulatedXP = 0 -- Tracks how much rested XP is added during the session
+  XPTracker.lastRestedXPWhole = XPTracker.lastRestedXPWhole or 0
+
+  -- Track resting state and rested XP
   db.char.CurrentlyResting = IsResting()
   db.char.RestedXP = GetXPExhaustion()
-  if db.char.RestedXP and XPTracker.RestedXPText then
-    XPTracker.RestedXPText:SetText(L["Rested XP: "] .. db.char.RestedXP)
-    TextInfo:UpdateTextColor()
-  end
-  if XPTracker.CurrentlyRestingText then
-    XPTracker.CurrentlyRestingText:SetText(
-      L["Currently Resting: "] .. tostring(db.char.CurrentlyResting))
-    TextInfo:UpdateTextColor()
+
+  if IsResting() then
+      -- Show the CurrentlyRestingText field when resting
+      XPTracker.CurrentlyRestingText:Show()
+
+      accumulatedXP = accumulatedXP + (incrementPerSecond * elapsed) -- Increment rested XP
+      restedXP = restedXP + (incrementPerSecond * elapsed)
+
+      -- Limit rested XP to a maximum of 1.5 levels
+      local restedXPMax = 1.5 * maxXP
+      if restedXP > restedXPMax then
+          restedXP = restedXPMax
+      end
+
+      -- Calculate the whole number part of restedXP
+      local restedXPWhole = math.floor(restedXP)
+
+      -- Update text only if the whole number changes
+      if restedXPWhole ~= XPTracker.lastRestedXPWhole then
+          XPTracker.lastRestedXPWhole = restedXPWhole
+          XPTracker.RestedXPText:SetText(string.format(L["Rested XP: %.0f/%.0f"], restedXPWhole, restedXPMax))
+          TextInfo:UpdateTextColor()
+      end
+  else
+      XPTracker.CurrentlyRestingText:Hide()
   end
 end
 

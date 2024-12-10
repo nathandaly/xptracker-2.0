@@ -21,7 +21,7 @@ function TextInfo:AddBasicInfoText(window)
   local restListTopY = initialListBottomY - 20
 
   XPTracker.CurrentLevelText = TextInfo:CreateTextString(window, "TOPLEFT", xIndent, topY,
-    L["XPTracker 2.0 - Lvl "], dbInfo.CurrentLevel .. ' - ' .. dbInfo.LevelPercent .. "%% ")
+    L["XPTracker 2.0 - Level "], dbInfo.CurrentLevel .. ' - ' .. dbInfo.LevelPercent .. "%% ")
 
   XPTracker.LastEventXPText = TextInfo:CreateTextString(window, "TOPLEFT", xIndent, initialListTopY, L["Last Event XP: "],
     dbInfo.LastEventXP)
@@ -33,7 +33,7 @@ function TextInfo:AddBasicInfoText(window)
     dbInfo.MaxXP - dbInfo.PlayerXP)
 
   XPTracker.CurrentlyRestingText = TextInfo:CreateTextString(window, "TOPLEFT", xIndent, restListTopY,
-    L["Currently Resting: "], tostring(dbInfo.CurrentlyResting))
+    L["Currently Resting"], "")
 
   XPTracker.RestedXPText = TextInfo:CreateTextString(window, "TOPLEFT", xIndent, restListTopY - textStep,
    L["Rested XP: "], dbInfo.RestedXP)
@@ -72,15 +72,14 @@ function TextInfo:AddXPPHInfoText(window)
 end
 
 function TextInfo:UpdateBasicInfoText()
-  XPTracker.CurrentLevelText:SetText(L['XPTracker 2.0 - Lvl '] .. XPTracker.db.char.CurrentLevel
+  XPTracker.CurrentLevelText:SetText(L['XPTracker - Level '] .. XPTracker.db.char.CurrentLevel
     .. ' - ' .. XPTracker.db.char.LevelPercent .. "%"
   )
   XPTracker.LastEventXPText:SetText(L['Last Event XP: '] .. XPTracker.db.char.LastEventXP)
   XPTracker.XPToNextLevelText:SetText(
     L['XP to Level: '] .. XPTracker.db.char.MaxXP - XPTracker.db.char.PlayerXP
   )
-  XPTracker.CurrentlyRestingText:SetText(
-    L['Currently Resting: '] .. tostring(XPTracker.db.char.CurrentlyResting))
+  XPTracker.CurrentlyRestingText:SetText(L['Currently Resting'])
   XPTracker.RestedXPText:SetText(L['Rested XP: '] .. XPTracker.db.char.RestedXP)
   XPTracker.RepeatEventText:SetText(L['Repeat to level: '] .. XPTracker:RepeatToLevel())
 end

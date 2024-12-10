@@ -25,5 +25,6 @@ function Events:PLAYER_LEAVING_WORLD()
 end
 
 function Events:PLAYER_UPDATE_RESTING()
+  print("PLAYER_UPDATE_RESTING")
   XPTracker:UpdateRestingInfo()
 end
