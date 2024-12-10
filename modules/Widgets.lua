@@ -16,7 +16,7 @@ end
 function Widgets:ConfigureMainWindow(window, windowPosition)
   ConfigMenu:HandleMainWindowMovement()
   window:EnableMouse(true)
-  window:SetWidth(200)
+  window:SetWidth(210)
   window:SetHeight(windowPosition.height)
   window:SetClampedToScreen(true)
 
@@ -225,7 +225,7 @@ function Widgets:CreatePrimaryButton(window, xOrigin, yOrigin, title)
 end
 
 function Widgets:CreateBasicInfoToggleButton(window)
-  XPTracker.ToggleBasicInfoButton = Widgets:CreateToggleButton(window, 180, 0)
+  XPTracker.ToggleBasicInfoButton = Widgets:CreateToggleButton(window, 190, 0)
   local button = XPTracker.ToggleBasicInfoButton
   Widgets:SetBasicInfoToggleButtonHandlers(button, button.texture)
 end
@@ -243,7 +243,7 @@ function Widgets:SetBasicInfoToggleButtonHandlers(button, texture)
 end
 
 function Widgets:CreateXPPHInfoToggleButton(window)
-  XPTracker.ToggleXPPHInfoButton = Widgets:CreateToggleButton(window, 180, -98)
+  XPTracker.ToggleXPPHInfoButton = Widgets:CreateToggleButton(window, 190, -98)
   local button = XPTracker.ToggleXPPHInfoButton
   Widgets:SetXPPHInfoToggleButtonHandlers(button, button.texture)
 end

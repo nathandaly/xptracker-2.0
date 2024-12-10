@@ -21,7 +21,7 @@ function TextInfo:AddBasicInfoText(window)
   local restListTopY = initialListBottomY - 20
 
   XPTracker.CurrentLevelText = TextInfo:CreateTextString(window, "TOPLEFT", xIndent, topY,
-    L["XPTracker - Level "], dbInfo.CurrentLevel .. ' - ' .. dbInfo.LevelPercent .. "%% ")
+    L["XPTracker 2.0 - Lvl "], dbInfo.CurrentLevel .. ' - ' .. dbInfo.LevelPercent .. "%% ")
 
   XPTracker.LastEventXPText = TextInfo:CreateTextString(window, "TOPLEFT", xIndent, initialListTopY, L["Last Event XP: "],
     dbInfo.LastEventXP)
@@ -72,7 +72,7 @@ function TextInfo:AddXPPHInfoText(window)
 end
 
 function TextInfo:UpdateBasicInfoText()
-  XPTracker.CurrentLevelText:SetText(L['XPTracker - Level '] .. XPTracker.db.char.CurrentLevel
+  XPTracker.CurrentLevelText:SetText(L['XPTracker 2.0 - Lvl '] .. XPTracker.db.char.CurrentLevel
     .. ' - ' .. XPTracker.db.char.LevelPercent .. "%"
   )
   XPTracker.LastEventXPText:SetText(L['Last Event XP: '] .. XPTracker.db.char.LastEventXP)

@@ -13,7 +13,7 @@ local defaults = {
       Position = {
         x = 330,
         y = -125,
-        width = 140,
+        width = 150,
         height = 200,
       },
       opacity = 6,

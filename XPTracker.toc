@@ -1,7 +1,7 @@
 ## Interface: 30401
-## Title: XPTracker
+## Title: XPTracker 2.0
 ## Notes: For tracking XP!
-## Version: 3.0
+## Version: 2.0
 ## SavedVariables: XPTrackerDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets
 

@@ -1,7 +1,7 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("XPTracker", "ruRU")
 if not L then return end
 
-L["XPTracker - Level "] = "XPTracker - Уровень "
+L["XPTracker 2.0 - Lvl "] = "XPTracker - Уровень "
 L["Last Event XP: "] = "Последний Опыт: "
 L["Repeat to level: "] = "Повторите до уровня: "
 L["XP to Level: "] = "Опыта до уровня: "
