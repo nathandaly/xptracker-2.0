@@ -30,7 +30,7 @@ function Widgets:ConfigureMainWindow(window, windowPosition)
 
   window:ApplyBackdrop()
 
-  local windowOpacity = XPTracker.OpacityOptions[XPTracker.db.profile.MainWindow.opacity]
+  local windowOpacity = XPTracker.Settings.General.OpacityOptions[XPTracker.db.profile.MainWindow.opacity]
   window:SetBackdropColor(0, 0, 0, windowOpacity)
 
   TextInfo:CreateWindowText(window)

@@ -21,8 +21,14 @@ local defaults = {
       ShowingXPPHInfo = true,
       IsLocked = false,
     },
+    Settings = {
+      Tracking = {
+        Interval = 10,
+      },
+    },
   },
   char = {
+    Debug = false,
     ShowingWindow = true,
     PlayerXP = 0,
     MaxXP = 0,
@@ -45,6 +51,20 @@ local defaults = {
     }
   },
 }
+
+function XPTracker:ChatPrint(str)
+  DEFAULT_CHAT_FRAME:AddMessage("[XPTracker] "..tostring(str), 0.25, 1.0, 0.25)
+end
+
+function XPTracker:ErrorPrint(str)
+  DEFAULT_CHAT_FRAME:AddMessage("[XPTracker Error] "..tostring(str), 1.0, 0.5, 0.5)
+end
+
+function XPTracker:DebugPrint(str)
+  if XPTracker.db.char.Debug then
+    DEFAULT_CHAT_FRAME:AddMessage("[XPTracker Debug] "..tostring(str), 0.75, 1.0, 0.25)
+  end
+end
 
 function XPTracker:OnInitialize()
   self.db = LibStub("AceDB-3.0"):New("XPTrackerDB", defaults, true)
@@ -105,12 +125,14 @@ function XPTracker:RepeatToLevel()
 end
 
 function XPTracker:RefreshXPPH()
+  local profile = XPTracker.db.profile
   local trackingInfo = db.char.TrackingInfo
   trackingInfo.TimeElapsed = trackingInfo.TimeElapsed + 1
   local timeElapsed = trackingInfo.TimeElapsed
   local XPRecorded = trackingInfo.XPRecorded
   TextInfo:UpdateXPPHInfoText()
-  if timeElapsed % 10 == 0 then -- Only update XPPH every 10 seconds
+  if timeElapsed > 0 and timeElapsed % profile.Settings.Tracking.Interval == 0 then
+    XPTracker:DebugPrint("Time Elapsed: " .. timeElapsed .. " XP Per HourUpdate interval: " .. profile.Settings.Tracking.Interval)
     trackingInfo.CurrentXPPH = XPTracker:GetXPPH(timeElapsed, XPRecorded)
     if XPTracker.XPPHText then
       XPTracker.XPPHText:SetText(L["XP Per Hour: "] .. trackingInfo.CurrentXPPH)

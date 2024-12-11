@@ -4,7 +4,15 @@ local L = LibStub("AceLocale-3.0"):GetLocale("XPTracker")
 local ConfigMenu = XPTracker:GetModule("ConfigMenu")
 local Widgets = XPTracker:GetModule("Widgets")
 
-XPTracker.OpacityOptions = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1}
+XPTracker.Settings = {
+  General = {
+    OpacityOptions = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1},
+  },
+  Tracking = {
+    intervalOptions = {1, 5, 10, 15, 30},
+  },
+}
+
 
 local function getOptions()
     local profile = XPTracker.db.profile
@@ -16,7 +24,8 @@ local function getOptions()
             general = {
                 type = "group",
                 inline = true,
-                name = "",
+                name = "General Settings",
+                order = 1,
                 args = {
                     lockWindow = {
                         name = "Lock window",
@@ -57,7 +66,7 @@ local function getOptions()
                         type = "select",
                         name = "Window Opacity",
                         desc = "Set the window opacity",
-                        values = XPTracker.OpacityOptions,
+                        values = XPTracker.Settings.General.OpacityOptions,
                         set = function(info, val)
                             profile.MainWindow.opacity = val
                             ConfigMenu:UpdateWindowOpacity(info, val)
@@ -67,6 +76,57 @@ local function getOptions()
                         end,
                     },
                 },
+            },
+            tracking = {
+              type = "group",
+              inline = true,
+              name = "XP Tracking",
+              order = 2,
+              args = {
+                  xpPerHourRefreshInterval = {
+                      type = "select",
+                      name = "XP Per Hour Interval",
+                      desc = "How often XP Tracker should refresh the XP per hour value",
+                      values = function()
+                          local options = {}
+                          local selectedInterval = profile.Settings.Tracking.Interval or 10
+                          for k,v in pairs(XPTracker.Settings.Tracking.intervalOptions) do
+                              if k == selectedInterval then
+                                  options[v] = v .. " seconds (selected)"
+                              else
+                                  options[v] = v .. " seconds"
+                              end
+                          end
+                          return options
+                      end,
+                      set = function(info, val)
+                        XPTracker:DebugPrint("Setting interval to: " .. val)
+                        profile.Settings.Tracking.Interval = val
+                      end,
+                      get = function(info, val)
+                          return profile.Settings.Tracking.Interval
+                      end,
+                  },
+              },
+            },
+            dev = {
+              type = "group",
+              inline = true,
+              name = "Developer Settings",
+              order = 3,
+              args = {
+                debug = {
+                  name = "Debug mode",
+                  desc = "Toggle debug mode",
+                  type = "toggle",
+                  set = function(info, val) 
+                  char.Debug = val
+                end,
+                get = function(info, val)
+                  return char.Debug
+                  end,
+                },
+              },
             },
         },
     }
